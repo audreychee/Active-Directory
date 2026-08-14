@@ -33,11 +33,19 @@ This repository documents the practical step-by-step setup, administration, and 
 ---
 
 ### 🟢 Phase 3: High-Priority AD Security Services
-* **`05-ad-certificate-services.md`** *(Critical SOC Target)*
+* **`05-forest-and-domain-infrastructure.md`**
+  * Active Directory Schema: Registering schmmgmt.dll, inspecting object classes & attributes, and understanding Schema Admins boundaries.
+  * Global Catalog (GC): Inspecting GC placement via dssite.msc, Partial Attribute Set (PAS), and Universal Group membership caching.
+  * Operations Master (FSMO) Roles: Understanding the 5 FSMO roles (PDC Emulator, Schema Master, etc.) and inspecting role placement via PowerShell.
+* **`06-ad-certificate-services.md`** *(Critical SOC Target)*
   * Active Directory Certificate Services (AD CS) role installation & Enterprise CA setup
   * Certificate template management & Web Enrollment configuration
   * Key revocation procedures and inspecting certificate identity mappings
-* **`06-auditing-and-recovery.md`**  
+
+---
+
+### 🟢 Phase 4: Auditing, Threat Detection & Recovery
+* **`07-auditing-and-recovery.md`**  
   * Enabling Advanced Security Audit Policies (Logon events, Account Creation, Group Modifications)
   * Mapping Windows Event IDs for threat detection (e.g., `4624`, `4720`, `4738`)
   * Enabling and using the Active Directory Recycle Bin for incident recovery
