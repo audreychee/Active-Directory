@@ -32,7 +32,7 @@ This repository documents the practical step-by-step setup, administration, and 
 
 ---
 
-### 🟢 Phase 3: High-Priority AD Security Services
+### 🟢 Phase 3: Forest Infrastructure & High-Priority AD Security
 * **`05-forest-and-domain-infrastructure.md`**
   * Active Directory Schema: Registering schmmgmt.dll, inspecting object classes & attributes, and understanding Schema Admins boundaries.
   * Global Catalog (GC): Inspecting GC placement via dssite.msc, Partial Attribute Set (PAS), and Universal Group membership caching.
