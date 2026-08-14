@@ -1,6 +1,6 @@
-﻿# Active Directory Lab Setup Guide
+# Active Directory Lab Setup Guide
 
-This guide walks through setting up a Windows Server 2022 Active Directory Domain Controller (DC) and joining a Windows 11 Enterprise client machine.
+This guide walks through setting up a Windows Server 2022 Active Directory Domain Controller (DC), joining a Windows 11 Enterprise client machine, and installing Remote Server Administration Tools (RSAT).
 
 ---
 
@@ -13,7 +13,7 @@ This guide walks through setting up a Windows Server 2022 Active Directory Domai
 4. **Initial Snapshot:** Take a clean snapshot of the Windows DC VM prior to domain configuration.
 5. **(Optional) Base Template Creation:** 
    * Create cloneable templates for quick lab deployment without repeating initial OS installation.
-   * *Path:* `Right-Click VM` $\rightarrow$ `Manage` $\rightarrow$ `Clone`.
+   * *Path:* `Right-Click VM` -> `Manage` -> `Clone`.
 6. **VMware Tools Installation:**
    * Install VMware Tools on the Windows Server 2022 DC VM.
    * Repeat installation for the Windows 11 Workstation VM.
@@ -21,20 +21,17 @@ This guide walks through setting up a Windows Server 2022 Active Directory Domai
 
 ---
 
-### 2. Configure Remote PowerShell Management
+### 2. Configure Remote Management & RSAT
 
-Set up remote administration from the Management Client Workstation to the Domain Controller.
-
-#### Step A: On Windows Server (DC)
-Enable PowerShell Remoting and retrieve the server IP address:
+#### Step A: Configure PowerShell Remoting (WinRM)
+On the **Windows Server (DC)**, enable PowerShell Remoting and retrieve the server IP address:
 
 ```powershell
 Enable-PSRemoting
 ipconfig
 ```
 
-#### Step B: On Management Workstation (Client)
-Start the WinRM service, add the Server IP to TrustedHosts, and open a remote PowerShell session:
+On the **Management Workstation (Client)**, start WinRM, add the DC IP to TrustedHosts, and open a remote session:
 
 ```powershell
 # Start WinRM Service
@@ -48,9 +45,26 @@ New-PSSession -ComputerName 192.168.29.135 -Credential (Get-Credential)
 Enter-PSSession 1
 ```
 
+> **Note on WinRM vs RSAT:** WinRM / PSRemoting provides a command-line terminal session directly on the target server. RSAT (Remote Server Administration Tools) installs graphical management consoles and local AD PowerShell cmdlets on your management workstation.
+
+#### Step B: Install RSAT on Management Workstation
+To manage Active Directory and Group Policy natively from your Workstation without logging directly into the DC desktop, run the following in an elevated PowerShell session on your **client machine**:
+
+```powershell
+# Install Active Directory Administrative Tools (ADUC, ADAC, ActiveDirectory Module)
+Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+
+# Install Group Policy Management Tools (GPMC)
+Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
+```
+
+Once installed, you can launch management consoles directly from your workstation:
+* **`dsa.msc`** -> Active Directory Users and Computers (ADUC)
+* **`gpmc.msc`** -> Group Policy Management Console (GPMC)
+
 #### Step C: Set Computer Hostname
 Rename the server using `sconfig`:
-* Launch `sconfig` $\rightarrow$ Select Option **2** (Computer Name) $\rightarrow$ Set new hostname (e.g., `WinSvr-DC1`).
+* Launch `sconfig` -> Select Option **2** (Computer Name) -> Set new hostname (e.g., `WinSvr-DC1`).
 
 ---
 
