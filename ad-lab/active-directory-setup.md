@@ -57,15 +57,13 @@ Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.
 # Install Group Policy Management Tools (GPMC)
 Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
 ```
-**Troubleshooting Connection Errors in `dsa.msc`:** If `dsa.msc` opens with a red "X" or displays the error *"Naming information cannot be located because: The specified domain either does not exist or could not be contacted"*, target the Domain Controller IP directly:
-1.  Click **OK** to dismiss the error dialog inside `dsa.msc`.
-2.  2.  Right-click **Active Directory Users and Computers** at the top-left of the console.
-3.  Select **Change Domain Controller...**
-4.  Select **Type a Domain Controller name or IP address**, enter your DC's static IP (`192.168.29.135`), and click **OK**.
+**Troubleshooting Connection Errors in `dsa.msc`:
+** If `dsa.msc` opens with a red "X" or displays the error *"Naming information cannot be located because: The specified domain either does not exist or could not be contacted"*, target the Domain Controller IP directly:
+  1.  Click **OK** to dismiss the error dialog inside `dsa.msc`.
+  2.  Right-click **Active Directory Users and Computers** at the top-left of the console.
+  3.  Select **Change Domain Controller...**
+  4.  Select **Type a Domain Controller name or IP address**, enter your DC's static IP (`192.168.29.135`), and click **OK**.
 
-### Shortcut Summary
--   **`dsa.msc`** -> Active Directory Users and Computers (ADUC)
--   **`gpmc.msc`** -> Group Policy Management Console (GPMC)
 Once installed, you can launch management consoles directly from your workstation:
 * **`dsa.msc`** -> Active Directory Users and Computers (ADUC)
 * **`gpmc.msc`** -> Group Policy Management Console (GPMC)
